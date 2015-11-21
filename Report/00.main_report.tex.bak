@@ -1,0 +1,35 @@
+\documentclass[oneside,12pt]{article}
+\usepackage{fontspec}
+\setmainfont{CMU Serif}
+\defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
+\usepackage{amsmath}
+\usepackage{lscape}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+%\usepackage[margin=1in]{geometry}
+\usepackage{float}
+
+\widowpenalty=1000
+\clubpenalty=1000
+
+\title{EL$2320$ - Applied Estimation \\ Lab II \\ Alexandros Filotheou}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+
+	\section{Part I}
+		\input{01.part_i}	
+		\newpage
+		
+		
+	\section{Part II}
+
+		\newpage
+	
+	\section{Part III}
+
+			
+\end{document}

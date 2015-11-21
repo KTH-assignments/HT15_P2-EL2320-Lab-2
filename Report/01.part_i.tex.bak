@@ -1,0 +1,43 @@
+\subsection{Question 1}
+
+Particles are called the samples from a posterior distribution.
+
+\subsection{Question 2}
+
+An \textit{importance weight} $w_t^{[m]}$ is the probability of a measurement $z_t$ regarding a specific particle $x_t^{[m]}$: $w_t^{[m]} = p(z_t | x_t^{[m]})$.
+
+In the context of particle filters, \textit{target distribution} is called the belief $bel(x_t)$, 
+while \textit{proposal distribution} is called the $\overline{bel}(x_t)$. 
+
+The target distribution cannot be sampled directly, however, it can be sampled indirectly by sampling from the proposal distribution. Each sample
+has a probability of being drawn equal to its importance weight. 
+
+\subsection{Question 3}
+
+Even though a small number of particles results in a higher probability of particle deprivation, the main cause of \textit{particle deprivation} 
+is the variance introduced by random sampling. The danger behind particle deprivation is that there may be no particles near the true state of the system.
+
+\subsection{Question 4}
+
+The resampling step is necessary in order to estimate the target distribution: it forces the particles to be distributed according to the posterior $bel(x_t)$.
+If, on the other hand, no resampling took place, more particles would reside in areas with a low posterior probability, and would thus be wasted to 
+regions of no real interest.
+
+\subsection{Question 5}
+
+In the case of a multimodal posterior, the average of the particle set would fail to account for the multiple regions of true interest, i.e. the regions where
+the true state of the system has the highest probability of being.
+
+\subsection{Question 6}
+
+Inferences about states that lie between particles can be made using histograms, where a bin is comprised by a collection of adjacent particles, 
+or Gaussian kernels, where each particle is used as the center of a Gaussian kernel.
+
+\subsection{Question 7}
+
+High sample variance can cause an incorrect estimation about the true state of a system. One solution is to reduce the resampling frequency. The second one uses a sequential stochastic process instead of drawing samples independently from each other.
+
+\subsection{Question 8}
+
+Pose uncertainty and number of particles used are proportionally related. The higher the uncertainty about the true state of the system, the larger the spread of 
+the posterior distribution, hence the more particles are needed to estimate the potentially different modes of the distribution.
