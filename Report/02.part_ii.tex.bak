@@ -1,0 +1,152 @@
+\subsection{Question 1}
+
+In 2D space, equation $6$ uses the exact same value for the angle $\theta_0$ for all timesteps $t$. This equation would accurately estimate
+the line of travel if no noise was introduced to the predicted state. However, because noise is present, the estimate of the motion will result in a zig-zag pattern,
+unlike the one in 3D space. In 3D space, instead of a fixed angle, the control model uses the angle of travel from the previous timestep, which was infected by
+noise, hence its estimate of the motion can be smoother than in the previous case.
+
+\subsection{Question 2}
+
+Since the initial translational and angular velocities $u_o, \omega_0$ need to be set in advance, the only circular motions that equation $9$ can model 
+are instances of a specific circle, with a specific direction of travel.
+
+\subsection{Question 3}
+
+The constant part in equation $10$ serves for normalization purposes. The integral over the entire distribution needs to equal to $1.0$, since the distribution
+represents a probability distribution.
+
+\subsection{Question 4}
+
+Algorithm $2$ illustrates the need for $M$ random numbers to be generated for the Multinomial re-sampling, where $M$ is the number of particles used.
+In contrast, algorithm $3$ shows that only one random number needs to be generated in the context of Systematic re-sampling.
+
+\subsection{Question 5}
+
+In Multinomial re-sampling, a particle $p^{[k]}$ with an importance weight $w^{[k]}$ attached to it has a probability of being selected equal to $w^{[k]}$, 
+and a probability of not being selected equal to $1 - w^{[k]}$. The probability of it not being selected $N$ consecutive times, since re-sampling takes place with replacement, is $(1 - w^{[k]})^N$. Hence, the probability of it being selected $N$ consecutive times is $1 - (1 - w^{[k]})^N$.
+
+In Systematic re-sampling, a particle $p^{[k]}$ with a weight $w^{[k]} = M^{-1} + \epsilon, 0 < \epsilon << 1$ attached to it will always be selected since
+the selection step size $M^{-1} < M^{-1} + \epsilon$. However, if $0 \leq w^{[k]} < M^{-1}$, the probability of its survival is $w^{[k]} \cdot M$. Since
+the random number $r$ is selected in the interval $[0, M^{-1}]$, assuming a uniform distribution for the its selection, and given the fact that the probability of
+selection of a particle is proportional to its weight, the probability of its selection is $\dfrac{w^{[k]} - 0}{M^{-1} - 0} = w^{[k]} \cdot M$.
+
+\subsection{Question 6}
+
+Measurement noise is modelled by $Sigma\_Q$, while process noise is modelled by $Sigma\_R$.
+
+\subsection{Question 7}
+
+If the process noise is set to zero, then the population of particles ends up being formed by $M$ copies of the same particle. This is reasonable, since
+the process noise is essentially a factor which contributes to particle diversity.
+
+\subsection{Question 8}
+
+If no re-sampling is performed, then the population of particles in not transformed in any way. The consistency of the populations stays the same throughout
+the experiment, and is comprised by the random particle set initialized at $t=1$. The motion of each particle simulates the estimation of the true state of the system
+from a different initial state and no convergence is made.
+
+\subsection{Question 9}
+
+Low values for the standard deviation of the measurement noise ($Q(1,1) = Q(2,2) \sim 0.0001$) mean that we expect the estimate of the measurements to be very accurate. 
+If these estimates do not follow the true measurements closely, then they are regarded as outliers. The end result is that the estimate does not converge to 
+the true state. Increasing the standard deviation to values $Q(1,1) = Q(2,2) \sim 10000$ means that our uncertainty about the measurements increases, and so does
+the variance of the particles around the true state.
+
+\subsection{Question 10}
+
+Low values for the standard deviation of the process noise ($Q(1,1) = Q(2,2) \sim 0.0001$) decrease the diversity of the particle population. This is exhibited
+in the formation of a dense particle cloud which oscillates around the true state, with convergence not being guaranteed. As the standard deviation increases,
+so does the probability of particles gaining more weight because of the larger variance in their position, which makes them estimate the true state quicker. The end
+result is a particle population spread evenly around the true state. The radius of the particle cloud is proportionally related to the variance of the process noise.
+
+\subsection{Question 11}
+
+If the motion model models the true motion accurately, then the process noise can be kept low, since there is enough confidence in the estimate of the true motion.
+On the other hand, if the motion model is known to be inaccurate, then the process noise should be larger, in order for particles to be able to estimate the
+true motion.
+
+\subsection{Question 12}
+
+A motion model that describes the actual motion in an accurate manner will have higher precision and accuracy. Furthermore, fewer particles will be needed, since
+the overall accuracy of the particles will be high. In contrast, an inaccurate motion model needs a larger particle population, so that the system can converge to 
+the actual state.
+
+\subsection{Question 13}
+
+When there is a large discrepancy between a measurement and its prediction, the likelihood function takes a small value. Hence, we could install a threshold
+to monitor this discrepancy and discard what we assume to be outliers.
+
+\subsection{Question 14}
+
+	\subsubsection{Fixed Motion}
+	
+	Adjusting the covariance matrices $R,Q$ as follows, it is possible to minimize the error to a value of $11.7 \pm 5.4$.
+	
+		\[
+	R =
+	\begin{bmatrix}
+	    2  		& 0		& 0 \\
+	    0       & 2 	& 0 \\
+	    0       & 0 	& 0.01 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+	\[
+	Q =
+	\begin{bmatrix}
+	    200  & 0 \\
+	    0    & 200 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+	\subsubsection{Linear Motion}
+	
+	Adjusting the covariance matrices $R,Q$ as follows, it is possible to minimize the error to a value of $7.1 \pm 3.8$.
+	
+		\[
+	R =
+	\begin{bmatrix}
+	    3       & 0		& 0 \\
+	    0       & 3 	& 0 \\
+	    0       & 0 	& 0.01 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+	\[
+	Q =
+	\begin{bmatrix}
+	    400  & 0 \\
+	    0    & 200 \\
+	
+	\end{bmatrix}
+	\]
+
+	\subsubsection{Circular Motion}
+	
+	Adjusting the covariance matrices $R,Q$ as follows, it is possible to minimize the error to a value of $7.1 \pm 3.8$.
+	
+		\[
+	R =
+	\begin{bmatrix}
+	    2  		& 0		& 0 \\
+	    0       & 2 	& 0 \\
+	    0       & 0 	& 0.01 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+	\[
+	Q =
+	\begin{bmatrix}
+	    200  & 0 \\
+	    0    & 200 \\
+	
+	\end{bmatrix}
+	\]

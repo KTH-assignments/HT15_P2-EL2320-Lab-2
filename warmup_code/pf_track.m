@@ -9,22 +9,27 @@ function pf_track(Z,X,VERBOSE)
 %Parameter Initialization
 if nargin < 3; VERBOSE = 2; end;
 params.state_space_dimension = 3; % either 3 or 2
-params.Sigma_Q = diag([100 100]); % measurement noise covariance matrix
+
+params.Sigma_Q = diag([200 200]); % measurement noise covariance matrix
+
 params.M = 1000;
+
 params.motion_type = 2; %0=fixed, 1=linear, 2=circular
+
 params.v_0 = 2*pi*200/688;
 params.theta_0 = 0;
 params.state_space_bound = [640;480];
 params.thresh_avg_likelihood = 0.0001;
-RESAMPLE_MODE = 1; 
+RESAMPLE_MODE = 1;
 %0=no resampling 1=vanilla resampling, 2=systematic resampling
 switch params.state_space_dimension
     case 2
         params.Sigma_R = diag([2 2]); % process noise covariance matrix
        % if params.omega_0; error('2D state space can not use omega_0'); end;
     case 3
-	params.omega_0 = 2*pi/688;
-        params.Sigma_R = diag([2 2 0.01]);
+        params.omega_0 = 2*pi/688;
+
+        params.Sigma_R = diag([2 2 0.005]);
 end
 dt = 1;
 %%
@@ -35,7 +40,7 @@ S.X = [rand(1, params.M)*params.state_space_bound(1); % sampling uniformly from 
 if params.state_space_dimension > 2
     S.X = [S.X;rand(1, params.M)*2*pi - pi];
 end
-S.W = 1/params.M * ones(1,params.M); % initialize equal weights 
+S.W = 1/params.M * ones(1,params.M); % initialize equal weights
 K = size(Z,2); % number of observations
 mean_S = zeros(2,K);
 figure(1);
