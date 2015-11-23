@@ -19,4 +19,16 @@ if ~delta_t
 end
 % FILL IN HERE
 
+  % Angular velocity of the right wheel
+  omega_R = 2 * pi * e_R / (E_T * delta_t);
+
+  % Angular velocity of the left wheel
+  omega_L = 2 * pi * e_L / (E_T * delta_t);
+
+  % Angular velocity of the robot
+  omega = (omega_R * R_R - omega_L * R_L) / B;
+
+  % Translational velocity of the robot
+  v = (omega_R * R_R + omega_L * R_L) / 2;
+
 end

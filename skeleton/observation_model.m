@@ -5,8 +5,20 @@
 %           S           4XM
 %           W           2XN
 %           j           1X1
-% Outputs:  
+% Outputs:
 %           h           2XM
 function h = observation_model(S,W,j)
 % FILL IN HERE
+
+  % h(1,1)
+  a = sqrt( (W(1,j) - S(1,:)).^2 + (W(2,j) - S(2,:)).^2);
+
+  % h(2,1)
+  b = atan2(W(2,j) - S(2,:), W(1,j) - S(1,:)) - S(3,:);
+
+  % Make sure -pi <= b <= pi
+  ang = mod(b + pi, 2 * pi) - pi;
+
+  % The final observation model
+  h = [a; ang];
 end

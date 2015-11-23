@@ -7,7 +7,7 @@
 \usepackage{graphicx}
 \usepackage{pgfplots}
 \usepackage{subcaption}
-%\usepackage[margin=1in]{geometry}
+\usepackage[margin=1.5in]{geometry}
 \usepackage{float}
 
 \widowpenalty=1000
@@ -30,6 +30,6 @@
 		\newpage
 	
 	\section{Part III}
-
+		\input{03.part_iii}
 			
 \end{document}

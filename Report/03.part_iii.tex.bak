@@ -1,0 +1,13 @@
+\subsection{Question 15}
+
+The two main parameters that have a direct impact on the outlier detection approach are the set threshold $\lambda_{\Psi}$ and the 
+measurement noise $Q$. As $|Q| \rightarrow 0$, the confidence in the correctness of the measurements increases, and the level of tolerance for discrepancies
+between the prediction of measurements and their true values decreases. This means that more and more measurements are classified as outliers. Furthermore, the same 
+result is observed for higher values of $\lambda_{\Psi}$. The higher its value is, the higher we demand the likelihood a particular measurement to be, and the more
+probable it is that measurements are to be discarded as outliers.
+
+\subsection{Question 16}
+
+If no outliers are discarded, then all measurements are considered to be valid. However, in the general case, not all measurements are to be equally trusted.
+Since even erroneous measurements will be taken into account, the weights of the particles are going to be erroneously distributed and the estimation of the
+true state will be more incorrect than it would have been otherwise.

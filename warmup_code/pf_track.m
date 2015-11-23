@@ -19,7 +19,8 @@ params.motion_type = 2; %0=fixed, 1=linear, 2=circular
 params.v_0 = 2*pi*200/688;
 params.theta_0 = 0;
 params.state_space_bound = [640;480];
-params.thresh_avg_likelihood = 0.0001;
+%params.thresh_avg_likelihood = 0.0001;
+params.thresh_avg_likelihood = 0;
 RESAMPLE_MODE = 1;
 %0=no resampling 1=vanilla resampling, 2=systematic resampling
 switch params.state_space_dimension
