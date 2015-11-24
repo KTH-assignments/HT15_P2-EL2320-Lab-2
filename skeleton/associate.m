@@ -21,8 +21,9 @@ function [outlier,Psi] = associate(S_bar,z,W,Lambda_psi,Q)
   % The number of particles M
   M = size(S_bar, 2);
 
-  z_bar = zeros(2, M, N);
 
+  % Pre-allocate z_bar and Psi
+  z_bar = zeros(2, M, N);
   Psi = zeros(1, n, M);
 
   % nu cannot be transposed, so Q must be modified in order for the
@@ -62,6 +63,8 @@ function [outlier,Psi] = associate(S_bar,z,W,Lambda_psi,Q)
 
   end
 
+  % Take the mean psi for every particle for a single measurement and
+  % determine if it's an outlier or not
   outlier = mean(reshape(Psi, n, M), 2) <= Lambda_psi;
 
 end

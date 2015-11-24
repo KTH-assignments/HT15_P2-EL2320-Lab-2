@@ -12,8 +12,10 @@ function S = systematic_resample(S_bar)
 
   r_0 = rand / M;
 
+  % Pre-allocate S
   S = zeros(4, M);
 
+  % The cumulative distribution of weights
   cdf = cumsum(S_bar(4,:));
 
   for m = 1:M

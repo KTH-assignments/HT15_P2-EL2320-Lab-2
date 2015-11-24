@@ -19,9 +19,7 @@ function S_bar = weight(S_bar,Psi,outlier)
   % Find the indices of the outliers
   outliers_indices = find(outlier);
 
-
   psi_new(outliers_indices,:) = 1;
-
 
   w = prod(psi_new);
 

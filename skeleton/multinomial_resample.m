@@ -10,8 +10,10 @@ function S = multinomial_resample(S_bar)
   % The number of particles M
   M = size(S_bar, 2);
 
+  % The cumulative distribution of weights
   cdf = cumsum(S_bar(4,:));
 
+  % Pre-allocate S
   S = zeros(4,M);
 
   for m = 1:M
@@ -28,7 +30,7 @@ function S = multinomial_resample(S_bar)
     end
     %size(S_bar(:,i))
 
-
+    % Initialize the new particle's weight
     S(4,m) = 1 / M;
   end
 

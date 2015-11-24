@@ -19,6 +19,7 @@ function [S_bar] = predict(S,v,omega,R,delta_t)
        delta_t * omega * ones(1, M);
        zeros(1, M)];
 
+  % Normally distributed process noise
   R_2 = [normrnd(0, R(1,1), 1, M);
          normrnd(0, R(2,2), 1, M);
          normrnd(0, R(3,3), 1, M);
