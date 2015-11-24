@@ -7,8 +7,8 @@
 %           Lambda_psi:     1X1
 %           start_pose:     3X1
 function [S,R,Q,Lambda_psi] = init(bound,start_pose)
-M = 10000;
-part_bound = 10;
+M = 1000;
+part_bound = 20;
 if ~isempty(start_pose)
     S = [repmat(start_pose,1,M); 1/M*ones(1,M)];
 else
@@ -17,10 +17,12 @@ else
          rand(1,M)*2*pi-pi;
          1/M*ones(1,M)];
 end
-% Below here you may want to experiment with the values but these seem to work for most datasets.
 
-R = diag([1e-2 1e-2 1e-2]); %process noise covariance matrix
-Q = diag([1e-1;1e-1]); % measurement noise covariance matrix
+% Below here you may want to experiment with the values but these seem to work
+% for most datasets.
+
+R = diag([5 5 1]); % process noise covariance matrix
+Q = diag([1e-4;1e-4]); % measurement noise covariance matrix
 Lambda_psi = 0.0001;
 
 end

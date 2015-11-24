@@ -59,6 +59,7 @@ function [outlier,Psi] = associate(S_bar,z,W,Lambda_psi,Q)
     %size(norm_exp * exp(sum(-0.5 .* nu .* Q_new .* nu, 1)))        % 1 17 10000
 
      Psi(1,i,:) = max(norm_exp * exp(sum(-0.5 .* nu .* Q_new .* nu, 1)));
+
   end
 
   outlier = mean(reshape(Psi, n, M), 2) <= Lambda_psi;

@@ -19,7 +19,9 @@ function S = systematic_resample(S_bar)
   for m = 1:M
     i = find(cdf >= r_0 + (m-1) / M, 1, 'first');
 
-    S(:,m) = S_bar(:,i);
+    if ~isempty(i)
+      S(:,m) = S_bar(:,i);
+    end
 
     S(4,m) = 1 / M;
   end

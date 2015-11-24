@@ -16,6 +16,7 @@
 %           S(t)                4XM
 %           outliers            1X1
 function [S,outliers] = mcl(S,R,Q,z,known_associations,v,omega,W,Lambda_psi,Map_IDS,delta_t,t)
+
 [S_bar] = predict(S,v,omega,R,delta_t);
 USE_KNOWN_ASSOCIATIONS = 0;
 
@@ -34,7 +35,7 @@ if outliers
 end
 S_bar = weight(S_bar,Psi,outlier);
 
-RESAMPLE_MODE = 1;
+RESAMPLE_MODE = 2;
 %0=no resampling, 1=Multinomial resampling, 2=Systematic Resampling
 switch RESAMPLE_MODE
     case 0
@@ -44,4 +45,5 @@ switch RESAMPLE_MODE
     case 2
         S = systematic_resample(S_bar);
 end
+
 end

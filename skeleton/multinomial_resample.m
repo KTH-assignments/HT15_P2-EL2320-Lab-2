@@ -22,9 +22,12 @@ function S = multinomial_resample(S_bar)
     % Locate the first element in cdf that satisfies arg min j CDF (j) >= r_m
     i = find(cdf >= r_m, 1, 'first');
 
+    % Needed. In the beginning i is empty
+    if ~isempty(i)
+      S(:,m) = S_bar(:,i);
+    end
     %size(S_bar(:,i))
 
-    S(:,m) = S_bar(:,i);
 
     S(4,m) = 1 / M;
   end

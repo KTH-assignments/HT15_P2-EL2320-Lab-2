@@ -9,13 +9,19 @@ function S_bar = weight(S_bar,Psi,outlier)
 
 %BE CAREFUL TO NORMALIZE THE FINAL WEIGHTS
 
+
+  %size(Psi)  % 1 1 10000
+
   % Squeeze Psi to n x M dimensions
-  psi_new = squeeze(Psi);
+  %psi_new = squeeze(Psi);
+  psi_new = reshape(Psi, size(Psi, 2), size(Psi, 3));
 
   % Find the indices of the outliers
   outliers_indices = find(outlier);
 
+
   psi_new(outliers_indices,:) = 1;
+
 
   w = prod(psi_new);
 

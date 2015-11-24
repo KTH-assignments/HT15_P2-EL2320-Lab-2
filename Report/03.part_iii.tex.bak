@@ -11,3 +11,100 @@ probable it is that measurements are to be discarded as outliers.
 If no outliers are discarded, then all measurements are considered to be valid. However, in the general case, not all measurements are to be equally trusted.
 Since even erroneous measurements will be taken into account, the weights of the particles are going to be erroneously distributed and the estimation of the
 true state will be more incorrect than it would have been otherwise.
+
+\subsection{map\_sym2 $+$ so\_sym2\_nk}
+
+Looking at the code provided, \texttt{part\_bound} seems to influence the $x,y$ coordinates of the initial position of each particle in the global localization case.
+The initial position for a particle is given by
+
+\begin{equation}
+init(a) = r \cdot l_{max} + (1-r) \cdot l_{min} + \texttt{part\_bound} \cdot (2r-1)
+\label{eq:1}
+\end{equation}
+
+where $a,l$ represent either $x,y$ coordinates of a particle and a landmark respectively, and $r \in [0,1]$ is a random value. 
+From equation \ref{eq:1} we infer that the higher the value of \texttt{part\_bound}, the larger the variance of the initial position of a particle around 
+the outermost landmarks of map $W$. Hence, the higher the value of \texttt{part\_bound}, the higher the probability that particles will occupy more spread-out areas
+near these symmetrically placed landmarks, which will result in a higher probability of the particles being able to distinguish them and keep them as
+reliable hypotheses.
+
+
+Figures \ref{fig:local_maps_1000_10000}, \ref{fig:local_errors_1000_10000} and \ref{fig:local_covariances_1000_10000} illustrate the resulting trajectories for
+tracking with $M=1000$ and $M=10000$ particles, using the default noise settings.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{./figures/M=1000/local/1.eps}
+	\includegraphics[scale=0.5]{./figures/M=10000/local/1.eps}
+	\caption{Resulting trajectories for $M=1000$ (left) and $M=10000$ (right).}
+	\label{fig:local_maps_1000_10000}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\scalebox{0.5}{\input{./figures/M=1000/local/2.tex}}
+	\scalebox{0.5}{\input{./figures/M=10000/local/2.tex}}
+	\caption{Mean pose errors for $M=1000$ (left) and $M=10000$ (right).}
+	\label{fig:local_errors_1000_10000}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\scalebox{0.5}{\input{./figures/M=1000/local/3.tex}}
+	\scalebox{0.5}{\input{./figures/M=10000/local/3.tex}}
+	\caption{Uncertainties in pose for $M=1000$ (left) and $M=10000$ (right).}
+	\label{fig:local_covariances_1000_10000}
+\end{figure}
+
+
+For the rest of the analysis we shall model stronger process noise with process noise and measurement covariance matrices $R,Q$:
+
+	\[
+	R =
+	\begin{bmatrix}
+	    5 		& 0		& 0 \\
+	    0	    & 5		& 0 \\
+	    0     	& 0 	& 1 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+	\[
+	Q =
+	\begin{bmatrix}
+	    0.1  & 0 \\
+	    0    & 0.1 \\
+	
+	\end{bmatrix}
+	\]
+	
+	
+In this map setting there are $4$ hypotheses, one for every landmark. Increasing the number of particles $M$ to $M=10000$ from $M=1000$ results
+in these hypotheses being kept for longer and with more reliability. The main effect observed with a smaller number of particles is particle deprivation. This
+effect is proportionally related to the level of process noise: the stronger the process noise, the less particle diversity is observed.
+
+Regarding multinomial sampling, it is more or less evident that it is not as robust or reliable in preserving multiple hypotheses, since it introduces
+sample variance and sequential sampling tackles this problem effectively.
+
+Finally, the higher the measurement noise, the more spread-out are the particles around the hypotheses, which are still preserved, but with lower accuracy.
+On the other hand, the lower the measurement noise, the less the degree in which the hypotheses are kept. When it reaches a certain threshold, we observe
+no relation between the particle distribution and the given hypotheses.
+
+
+\subsection{map\_sym3 $+$ so\_sym3\_nk}
+
+Figure \ref{fig:pf_converge_10000} illustrates the convergence of the particle filter. Until timestep $t=180$ the upper right landmark has not been
+observed, hence the robot keeps all $4$ hypotheses as to where it might be due to the symmetry of the landmarks. 
+However, when it observes the $5^{th}$ landmark, this symmetry is resolved and it can reliably locate itself.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{./figures/M=10000/1.eps}
+	\includegraphics[scale=0.5]{./figures/M=10000/2.eps}
+	\includegraphics[scale=0.5]{./figures/M=10000/3.eps}
+	\includegraphics[scale=0.5]{./figures/M=10000/4.eps}
+	\caption{Convergence of the PF to one single hypothesis due to symmetry resolution.}
+	\label{fig:pf_converge_10000}
+\end{figure}
